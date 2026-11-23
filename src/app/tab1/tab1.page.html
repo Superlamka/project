@@ -1,15 +1,29 @@
-<ion-header [translucent]="true">
+
+<ion-header>
   <ion-toolbar>
-    <ion-title> Tab 1 </ion-title>
+    <ion-title>Publish work</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <h2>Describe the work you need done</h2>
+
+  <ion-item>
+    <ion-textarea
+      [(ngModel)]="workDescription"
+      placeholder="Example: I need someone to repair my bathroom..."
+      rows="6"
+      autoGrow="true">
+    </ion-textarea>
+  </ion-item>
+
+  <ion-button
+    expand="block"
+    class="ion-margin-top"
+    (click)="publishWork()"
+    [disabled]="!workDescription.trim()">
+    Publish work
+  </ion-button>
+
 </ion-content>

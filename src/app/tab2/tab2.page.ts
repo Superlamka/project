@@ -1,14 +1,37 @@
-import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular';
 
-import { ExploreContainerComponent } from '../explore-container/explore-container.component';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonList,
+  IonItem,
+  IonLabel
+} from '@ionic/angular';
+
+import { WorkService } from '../services/work.service';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent],
+  imports: [
+    CommonModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonLabel
+  ]
 })
 export class Tab2Page {
-  constructor() {}
+
+  works$ = this.workService.works$;
+
+  constructor(private workService: WorkService) {}
 }
