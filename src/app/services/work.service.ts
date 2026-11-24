@@ -85,6 +85,35 @@ export class WorkService {
     this.workStorageService.saveWorks(works);
   }
 
+
+  updateWork(workId: string, description: string): void {
+
+    const updatedWorks = this.worksSubject.value.map(work => {
+
+      if (work.id !== workId) {
+        return work;
+      }
+
+      return {
+        ...work,
+        description
+      };
+    });
+
+    this.updateWorks(updatedWorks);
+  }
+
+
+  deleteWork(workId: string): void {
+
+    const updatedWorks = this.worksSubject.value.filter(
+      work => work.id !== workId
+    );
+
+    this.updateWorks(updatedWorks);
+  }
+
+
   clearWorks(): void {
   this.workStorageService.clearWorks();
   this.worksSubject.next([]);

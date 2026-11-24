@@ -1,0 +1,99 @@
+
+<ion-card>
+
+  <ion-card-header>
+
+    <ion-card-title>
+      My published work
+    </ion-card-title>
+
+    <ion-label color="medium">
+      Published: {{ work.createdAt | date:'medium' }}
+    </ion-label>
+
+  </ion-card-header>
+
+  <ion-card-content>
+
+    <!-- Normal view -->
+    <div *ngIf="!isEditing">
+
+      <p class="work-description">
+        {{ work.description }}
+      </p>
+
+      <p class="response-count">
+        {{ work.responses.length }} response(s)
+      </p>
+
+      <div class="action-buttons">
+
+        <ion-button
+          fill="outline"
+          expand="block"
+          (click)="startEditing()">
+
+          Edit
+
+        </ion-button>
+
+        <ion-button
+          color="danger"
+          fill="outline"
+          expand="block"
+          (click)="deleteWork()">
+
+          Delete
+
+        </ion-button>
+
+      </div>
+
+    </div>
+
+    <!-- Editing view -->
+    <div *ngIf="isEditing" class="edit-form">
+
+      <h3>Edit your work</h3>
+
+      <ion-item>
+        <ion-textarea
+          [(ngModel)]="editedDescription"
+          placeholder="Describe the work you need done..."
+          rows="5"
+          autoGrow="true">
+        </ion-textarea>
+      </ion-item>
+
+      <div class="action-buttons">
+
+        <ion-button
+          expand="block"
+          (click)="saveChanges()"
+          [disabled]="!editedDescription.trim()">
+
+          Save changes
+
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          fill="outline"
+          color="medium"
+          (click)="cancelEditing()">
+
+          Cancel
+
+        </ion-button>
+
+      </div>
+
+    </div>
+
+    <p class="response-count" *ngIf="work.responses.length > 0">
+      This work has {{ work.responses.length }} artisan response(s).
+    </p>
+
+  </ion-card-content>
+
+</ion-card>

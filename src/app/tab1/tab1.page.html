@@ -7,8 +7,30 @@
 
 <ion-content class="ion-padding">
 
+  <!-- Publishing form -->
   <app-publish-work
     (workPublished)="onWorkPublished($event)">
   </app-publish-work>
+
+  <!-- Customer's published work -->
+  <h2 class="section-title">My published work</h2>
+
+  <ng-container *ngIf="works$ | async as works">
+
+    <div *ngIf="works.length === 0" class="empty-state">
+      <p>You haven't published any work yet.</p>
+    </div>
+
+    <div *ngFor="let work of works">
+
+      <app-customer-work-card
+        [work]="work"
+        (deleteRequested)="confirmDelete($event)"
+        (updateRequested)="onWorkUpdated($event)">
+      </app-customer-work-card>
+
+    </div>
+
+  </ng-container>
 
 </ion-content>
