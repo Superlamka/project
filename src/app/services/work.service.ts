@@ -3,15 +3,28 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { Work, WorkResponse } from '../models/work.model';
+import { WorkStorageService } from './storage/work-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkService {
 
-  private worksSubject = new BehaviorSubject<Work[]>([]);
+  private worksSubject: BehaviorSubject<Work[]>;
 
-  works$ = this.worksSubject.asObservable();
+  works$;
+
+  constructor(
+    private workStorageService: WorkStorageService
+  ) {
+
+    // Load previously saved work when the service starts.
+    const savedWorks = this.workStorageService.getWorks();
+
+    this.worksSubject = new BehaviorSubject<Work[]>(savedWorks);
+
+    this.works$ = this.worksSubject.asObservable();
+  }
 
   addWork(description: string): void {
 
@@ -24,10 +37,12 @@ export class WorkService {
 
     const currentWorks = this.worksSubject.value;
 
-    this.worksSubject.next([
+    const updatedWorks = [
       newWork,
       ...currentWorks
-    ]);
+    ];
+
+    this.updateWorks(updatedWorks);
   }
 
   addResponse(
@@ -58,6 +73,20 @@ export class WorkService {
       };
     });
 
-    this.worksSubject.next(updatedWorks);
+    this.updateWorks(updatedWorks);
+  }
+
+  private updateWorks(works: Work[]): void {
+
+    // Update application state.
+    this.worksSubject.next(works);
+
+    // Persist the updated data.
+    this.workStorageService.saveWorks(works);
+  }
+
+  clearWorks(): void {
+  this.workStorageService.clearWorks();
+  this.worksSubject.next([]);
   }
 }
