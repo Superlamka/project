@@ -1,17 +1,14 @@
 
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
 import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonContent,
-  IonItem,
-  IonTextarea,
-  IonButton
+  IonContent
 } from '@ionic/angular';
 
+import { PublishWorkComponent } from '../components/publish-work/publish-work.component';
 import { WorkService } from '../services/work.service';
 
 @Component({
@@ -19,31 +16,18 @@ import { WorkService } from '../services/work.service';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
   imports: [
-    FormsModule,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
-    IonItem,
-    IonTextarea,
-    IonButton
+    PublishWorkComponent
   ]
 })
 export class Tab1Page {
 
-  workDescription = '';
-
   constructor(private workService: WorkService) {}
 
-  publishWork(): void {
-    const description = this.workDescription.trim();
-
-    if (!description) {
-      return;
-    }
-
+  onWorkPublished(description: string): void {
     this.workService.addWork(description);
-
-    this.workDescription = '';
   }
 }

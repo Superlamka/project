@@ -1,0 +1,46 @@
+
+.work-description {
+  font-size: 16px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  margin-bottom: 20px;
+}
+
+.response-count {
+  color: var(--ion-color-medium);
+  font-size: 14px;
+}
+
+.response-form {
+  margin-top: 20px;
+  padding: 15px;
+  background: var(--ion-color-light);
+  border-radius: 8px;
+}
+
+.response-form h3,
+.responses h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.responses {
+  margin-top: 25px;
+}
+
+.response-item {
+  padding: 12px;
+  margin-top: 10px;
+  background: var(--ion-color-light);
+  border-radius: 8px;
+}
+
+.contact-info {
+  font-weight: 500;
+}
+
+.response-date {
+  color: var(--ion-color-medium);
+  font-size: 12px;
+}

@@ -9,20 +9,27 @@
 
   <h2>Browse published work</h2>
 
-  <ion-list *ngIf="works$ | async as works">
+  <ng-container *ngIf="works$ | async as works">
 
-    <ion-item *ngFor="let work of works">
-      <ion-label class="ion-text-wrap">
-        {{ work }}
-      </ion-label>
-    </ion-item>
+    <ion-list *ngIf="works.length === 0">
 
-    <ion-item *ngIf="works.length === 0">
-      <ion-label color="medium">
-        No work has been published yet.
-      </ion-label>
-    </ion-item>
+      <ion-item>
+        <ion-label color="medium">
+          No work has been published yet.
+        </ion-label>
+      </ion-item>
 
-  </ion-list>
+    </ion-list>
+
+    <div *ngFor="let work of works">
+
+      <app-work-card
+        [work]="work"
+        (responseSubmitted)="onResponseSubmitted(work.id, $event)">
+      </app-work-card>
+
+    </div>
+
+  </ng-container>
 
 </ion-content>

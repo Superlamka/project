@@ -13,6 +13,7 @@ import {
 } from '@ionic/angular';
 
 import { WorkService } from '../services/work.service';
+import { WorkCardComponent, ResponseSubmission } from '../components/work-card/work-card.component';
 
 @Component({
   selector: 'app-tab2',
@@ -26,7 +27,8 @@ import { WorkService } from '../services/work.service';
     IonContent,
     IonList,
     IonItem,
-    IonLabel
+    IonLabel,
+    WorkCardComponent
   ]
 })
 export class Tab2Page {
@@ -34,4 +36,16 @@ export class Tab2Page {
   works$ = this.workService.works$;
 
   constructor(private workService: WorkService) {}
+
+  onResponseSubmitted(
+    workId: string,
+    response: ResponseSubmission
+  ): void {
+
+    this.workService.addResponse(
+      workId,
+      response.message,
+      response.contactInfo
+    );
+  }
 }

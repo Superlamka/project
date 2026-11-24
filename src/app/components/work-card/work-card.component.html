@@ -1,0 +1,98 @@
+
+<ion-card>
+
+  <!-- Work information -->
+  <ion-card-header>
+
+    <ion-card-title>
+      Work request
+    </ion-card-title>
+
+    <ion-label color="medium">
+      Published: {{ work.createdAt | date:'medium' }}
+    </ion-label>
+
+  </ion-card-header>
+
+  <ion-card-content>
+
+    <p class="work-description">
+      {{ work.description }}
+    </p>
+
+    <p class="response-count">
+      {{ work.responses.length }}
+      response(s)
+    </p>
+
+    <ion-button
+      expand="block"
+      fill="outline"
+      (click)="toggleResponseForm()">
+
+      {{ showResponseForm ? 'Cancel' : 'Respond' }}
+
+    </ion-button>
+
+    <!-- Inline response form -->
+    <div *ngIf="showResponseForm" class="response-form">
+
+      <h3>Respond to this work</h3>
+
+      <ion-item>
+        <ion-textarea
+          [(ngModel)]="responseMessage"
+          name="responseMessage"
+          placeholder="Describe how you can help..."
+          rows="4"
+          autoGrow="true">
+        </ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          [(ngModel)]="contactInfo"
+          name="contactInfo"
+          type="text"
+          placeholder="Your email or phone number">
+        </ion-input>
+      </ion-item>
+
+      <ion-button
+        expand="block"
+        class="ion-margin-top"
+        (click)="submitResponse()"
+        [disabled]="!responseMessage.trim() || !contactInfo.trim()">
+
+        Submit response
+
+      </ion-button>
+
+    </div>
+
+    <!-- Existing responses -->
+    <div *ngIf="work.responses.length > 0" class="responses">
+
+      <h3>Artisan responses</h3>
+
+      <div
+        *ngFor="let response of work.responses"
+        class="response-item">
+
+        <p>{{ response.message }}</p>
+
+        <p class="contact-info">
+          Contact: {{ response.contactInfo }}
+        </p>
+
+        <p class="response-date">
+          {{ response.createdAt | date:'medium' }}
+        </p>
+
+      </div>
+
+    </div>
+
+  </ion-card-content>
+
+</ion-card>
