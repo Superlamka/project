@@ -14,6 +14,11 @@ import {
 
 import { WorkService } from '../services/work.service';
 import { WorkCardComponent, ResponseSubmission } from '../components/work-card/work-card.component';
+import {
+  Work,
+  WorkCategory,
+  WORK_CATEGORIES
+} from '../models/work.model';
 
 @Component({
   selector: 'app-tab2',
@@ -35,6 +40,10 @@ export class Tab2Page {
 
   works$ = this.workService.works$;
 
+  readonly categories = WORK_CATEGORIES;
+  selectedCategory: WorkCategory | 'all' = 'all';
+
+
   constructor(private workService: WorkService) {}
 
   onResponseSubmitted(
@@ -47,5 +56,17 @@ export class Tab2Page {
       response.message,
       response.contactInfo
     );
+  }
+
+  selectCategory(category: WorkCategory | 'all'): void {
+    this.selectedCategory = category;
+  }
+
+  getVisibleWorks(works: Work[]): Work[] {
+    if (this.selectedCategory === 'all') {
+      return works;
+    }
+
+    return works.filter(work => work.category === this.selectedCategory);
   }
 }

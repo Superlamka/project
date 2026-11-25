@@ -1,9 +1,24 @@
-
 <h2>Describe the work you need done</h2>
+
+<ion-item>
+  <ion-select
+    [(ngModel)]="selectedCategory"
+    name="category"
+    label="Category"
+    placeholder="Choose a category"
+    interface="popover">
+    <ion-select-option
+      *ngFor="let category of categories"
+      [value]="category">
+      {{ category }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
 
 <ion-item>
   <ion-textarea
     [(ngModel)]="workDescription"
+    name="description"
     placeholder="Example: I need someone to repair my bathroom..."
     rows="6"
     autoGrow="true">
@@ -14,8 +29,6 @@
   expand="block"
   class="ion-margin-top"
   (click)="publishWork()"
-  [disabled]="!workDescription.trim()">
-
+  [disabled]="!workDescription.trim() || !selectedCategory">
   Publish work
-
 </ion-button>

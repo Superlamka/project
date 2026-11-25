@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { Work, WorkResponse } from '../models/work.model';
+import { Work, WorkCategory, WorkResponse } from '../models/work.model';
 import { WorkStorageService } from './storage/work-storage.service';
 
 @Injectable({
@@ -26,22 +26,16 @@ export class WorkService {
     this.works$ = this.worksSubject.asObservable();
   }
 
-  addWork(description: string): void {
-
+  addWork(description: string, category: WorkCategory): void {
     const newWork: Work = {
       id: crypto.randomUUID(),
       description,
+      category,
       createdAt: new Date(),
       responses: []
     };
 
-    const currentWorks = this.worksSubject.value;
-
-    const updatedWorks = [
-      newWork,
-      ...currentWorks
-    ];
-
+    const updatedWorks = [newWork, ...this.worksSubject.value];
     this.updateWorks(updatedWorks);
   }
 

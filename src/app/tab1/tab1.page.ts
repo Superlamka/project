@@ -1,6 +1,7 @@
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { WorkCategory } from '../models/work.model';
 
 import {
   IonHeader,
@@ -39,8 +40,11 @@ export class Tab1Page {
     private alertController: AlertController
   ) {}
 
-  onWorkPublished(description: string): void {
-    this.workService.addWork(description);
+  onWorkPublished(event: {
+    description: string;
+    category: WorkCategory;
+  }): void {
+    this.workService.addWork(event.description, event.category);
   }
 
 

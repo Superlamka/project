@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-toolbar>
     <ion-title>Available work</ion-title>
@@ -6,30 +5,43 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-
   <h2>Browse published work</h2>
 
   <ng-container *ngIf="works$ | async as works">
+    <div class="category-filters">
+      <ion-button
+        size="small"
+        [fill]="selectedCategory === 'all' ? 'solid' : 'outline'"
+        (click)="selectCategory('all')">
+        All
+      </ion-button>
+
+      <ion-button
+        *ngFor="let category of categories"
+        size="small"
+        [fill]="selectedCategory === category ? 'solid' : 'outline'"
+        (click)="selectCategory(category)">
+        {{ category }}
+      </ion-button>
+    </div>
 
     <ion-list *ngIf="works.length === 0">
-
       <ion-item>
-        <ion-label color="medium">
-          No work has been published yet.
-        </ion-label>
+        <ion-label color="medium">No work has been published yet.</ion-label>
       </ion-item>
-
     </ion-list>
 
-    <div *ngFor="let work of works">
+    <p
+      *ngIf="works.length > 0 && getVisibleWorks(works).length === 0"
+      class="empty-state">
+      No work has been published in this category.
+    </p>
 
+    <div *ngFor="let work of getVisibleWorks(works)">
       <app-work-card
         [work]="work"
         (responseSubmitted)="onResponseSubmitted(work.id, $event)">
       </app-work-card>
-
     </div>
-
   </ng-container>
-
 </ion-content>

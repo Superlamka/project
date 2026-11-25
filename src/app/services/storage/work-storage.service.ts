@@ -27,6 +27,7 @@ export class WorkStorageService {
     // Convert date strings back into Date instances.
     return works.map(work => ({
       ...work,
+      category: work.category ?? 'Other',
       createdAt: new Date(work.createdAt),
       responses: (work.responses ?? []).map(response => ({
         ...response,
